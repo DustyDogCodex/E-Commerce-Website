@@ -6,7 +6,7 @@ const CartContext = createContext({
     itemQuantity: () => {},
     addOne: () => {},
     removeOne: () => {},
-    delete: () => {},
+    deleteOne: () => {},
     totalCost: () => {}
 })
 
