@@ -25,7 +25,6 @@ function NavBarComponent(){
             { items: cartContext.productsInCart }
         )
         .then(res => {
-            console.log(res.data.url)
             //once server creates a stripe session and sends us the session url, we can pass it to react and relocate the user to that url
             if(res.data.url) {
                 window.location.assign(res.data.url)
