@@ -32,7 +32,7 @@ function CartProvider({ children }){
 
         if(quantity === 0){   
             //item has not been added to the cart previously
-            setProductsInCart([...productsInCart, { id: id, quantity: 1 }])
+            setProductsInCart([...productsInCart, { id, quantity: 1 }])
         } else {              
             //item is in the cart already 
             setProductsInCart(

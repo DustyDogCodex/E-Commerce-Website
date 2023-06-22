@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { Button, Modal, Navbar } from "react-bootstrap"
 import { CartContext } from "../CartContext"
 import ItemInCart from "./ItemInCart"
+import axios from 'axios'
 
 function NavBarComponent(){
     
@@ -15,9 +16,25 @@ function NavBarComponent(){
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
+    //count of products in cart
     const itemCount = cartContext.productsInCart.reduce((prev,curr) => prev + curr.quantity, 0)
 
-    console.log(cartContext.productsInCart)
+    //function for checking out with items currently in the cart
+    async function checkout(){
+        await axios.post('http://localhost:5000/checkout',
+            { items: cartContext.productsInCart }
+        )
+        .then(res => {
+            console.log(res.data.url)
+            //once server creates a stripe session and sends us the session url, we can pass it to react and relocate the user to that url
+            if(res.data.url) {
+                window.location.assign(res.data.url)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
     
     return(
         <>
@@ -46,7 +63,12 @@ function NavBarComponent(){
 
                             <h1>Total: {cartContext.totalCost().toFixed(2)}</h1>
 
-                            <Button variant="success">Checkout</Button>
+                            <Button 
+                                variant="success"
+                                onClick={checkout}
+                            >
+                                Checkout
+                            </Button>
                         </>
                     :
                         <h1>There are no items in your cart.</h1>

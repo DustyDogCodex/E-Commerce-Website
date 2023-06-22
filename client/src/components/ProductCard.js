@@ -7,10 +7,9 @@ function ProductCard({ id, name, price }){
     //using CartContext to add items to our cart.
     const cartContext = useContext(CartContext)
     const itemQuantity = cartContext.itemQuantity(id)
-    console.log(cartContext.productsInCart)
 
     return(
-        <Card id={id}>
+        <Card>
             <Card.Body>
                 <Card.Title>{name}</Card.Title>
                 <Card.Text>${price}</Card.Text>
